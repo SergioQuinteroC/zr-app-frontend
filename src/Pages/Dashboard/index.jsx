@@ -1,5 +1,7 @@
+import Layout from "../../Components/Layout";
+
 function Dashboard() {
-	return <div className="bg-red-100">Dashboard</div>;
+	return <Layout>Dashboard;</Layout>;
 }
 
 export default Dashboard;

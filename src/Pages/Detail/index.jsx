@@ -1,5 +1,7 @@
+import Layout from "../../Components/Layout";
+
 function Detail() {
-	return <div className="bg-red-100">Detail</div>;
+	return <Layout>Detail</Layout>;
 }
 
 export default Detail;
