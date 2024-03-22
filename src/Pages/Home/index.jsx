@@ -1,28 +1,23 @@
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "../../Components/Card";
 import RealestateDetail from "../../Components/RealestateDetail";
 import Layout from "./../../Components/Layout";
-// import { useEffect } from "react";
 
 function Home() {
-	// const [property, setProperty] = useState();
+	const [items, setItems] = useState();
 
-	// useEffect(() => {
-	// 	fetch('url')
-	// 	.then(response => response.json())
-	// }, [])
+	useEffect(() => {
+		fetch(`http://localhost:3000/api/v1/realestates`)
+			.then((response) => response.json())
+			.then((data) => setItems(data));
+	}, []);
 
 	return (
 		<Layout>
 			<div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
+				{items?.map((item) => (
+					<Card key={item.id} data={item} />
+				))}
 			</div>
 			<RealestateDetail />
 		</Layout>
