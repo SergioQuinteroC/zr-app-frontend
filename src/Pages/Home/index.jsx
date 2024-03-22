@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import Card from "../../Components/Card";
-import ProductDetail from "../../Components/RealestateDetail";
+import RealestateDetail from "../../Components/RealestateDetail";
 import Layout from "./../../Components/Layout";
 // import { useEffect } from "react";
 
@@ -24,7 +24,7 @@ function Home() {
 				<Card />
 				<Card />
 			</div>
-			<ProductDetail />
+			<RealestateDetail />
 		</Layout>
 	);
 }

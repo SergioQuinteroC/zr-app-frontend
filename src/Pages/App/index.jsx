@@ -1,5 +1,6 @@
 import { useRoutes, BrowserRouter } from "react-router-dom";
 
+import { ZRAppProvider } from "../../Context";
 import "./App.css";
 import Home from "../Home";
 import Detail from "../Detail";
@@ -21,10 +22,12 @@ const AppRoutes = () => {
 };
 const App = () => {
 	return (
-		<BrowserRouter>
-			<Navbar />
-			<AppRoutes />
-		</BrowserRouter>
+		<ZRAppProvider>
+			<BrowserRouter>
+				<Navbar />
+				<AppRoutes />
+			</BrowserRouter>
+		</ZRAppProvider>
 	);
 };
 
