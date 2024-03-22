@@ -1,31 +1,31 @@
 import { useContext } from "react";
 import { ZRAppContext } from "../../Context";
 
-const Card = (data) => {
+const Card = ({ id, title, description, price, images, address }) => {
 	const context = useContext(ZRAppContext);
 
-	console.log(data.data.images[0])
+	const showEstate = () => {
+		context.openRealestateDetail();
+		context.setEstateToShow({ title, price, description, images, address });
+	};
+
 	return (
 		//    card wrapper
 		<div
 			className="overflow-hidden rounded-md bg-white shadow-2xl"
-			onClick={() => context.openRealestateDetail()}
+			onClick={() => showEstate()}
 		>
 			{/* image container  */}
-			<div className={`h-64 w-full bg-[url('${data.data.images[0]}')] bg-cover bg-center`}></div>
+			<div
+				className={`h-64 w-full bg-[url('${images[0]}')] bg-cover bg-center`}
+			></div>
 
 			{/* content container */}
 			<div className="flex flex-col gap-2 p-4">
 				<div>
-					<p className="text-xl font-bold text-gray-900">
-						{data.data.title}
-					</p>
-					<p className="text-sm text-gray-700">
-						{data.data.description}
-					</p>
-					<p className="text-sm text-gray-500">
-						{data.data.address}
-					</p>
+					<p className="text-xl font-bold text-gray-900">{title}</p>
+					<p className="text-sm text-gray-700">{description}</p>
+					<p className="text-sm text-gray-500">{address}</p>
 				</div>
 			</div>
 
@@ -33,7 +33,7 @@ const Card = (data) => {
 			<div className="flex justify-between border-t border-t-gray-100 bg-gray-50 p-3">
 				<div className="flex items-center">
 					<p className="text-xl font-bold text-gray-900">
-						${data.data.price}
+						${price}
 					</p>
 					{/* <p className="text-sm text-gray-500"></p> */}
 				</div>

@@ -7,12 +7,22 @@ export const ZRAppProvider = ({ children }) => {
 	const openRealestateDetail = () => setIsDetailOpen(true);
 	const closeRealestateDetail = () => setIsDetailOpen(false);
 
+	const [estateToShow, setEstateToShow] = useState({
+		title: "",
+		price: "",
+		address: "",
+		description: "",
+		images: [],
+	});
+
 	return (
 		<ZRAppContext.Provider
 			value={{
 				isDetailOpen,
 				openRealestateDetail,
 				closeRealestateDetail,
+				estateToShow,
+				setEstateToShow,
 			}}
 		>
 			{children}
