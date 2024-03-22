@@ -9,6 +9,7 @@ const Card = ({ id, title, description, price, images, address }) => {
 		context.setEstateToShow({ title, price, description, images, address });
 	};
 
+	console.log(images[0]);
 	return (
 		//    card wrapper
 		<div
@@ -32,9 +33,7 @@ const Card = ({ id, title, description, price, images, address }) => {
 			{/* footer container */}
 			<div className="flex justify-between border-t border-t-gray-100 bg-gray-50 p-3">
 				<div className="flex items-center">
-					<p className="text-xl font-bold text-gray-900">
-						${price}
-					</p>
+					<p className="text-xl font-bold text-gray-900">${price}</p>
 					{/* <p className="text-sm text-gray-500"></p> */}
 				</div>
 			</div>
