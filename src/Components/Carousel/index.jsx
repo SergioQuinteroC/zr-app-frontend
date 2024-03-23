@@ -15,7 +15,7 @@ const Carousel = ({ slides }) => {
 	};
 
 	return (
-		<div className="overflow-hidden relative rounded-2xl">
+		<div className="overflow-hidden relative rounded-2xl h-full">
 			<div
 				className={`flex transition ease-out duration-40`}
 				style={{
@@ -23,7 +23,7 @@ const Carousel = ({ slides }) => {
 				}}
 			>
 				{slides?.map((sr) => {
-					return <img key={sr} src={sr} />;
+					return <img className="object-cover h-full w-full" key={sr} src={sr} />;
 				})}
 			</div>
 

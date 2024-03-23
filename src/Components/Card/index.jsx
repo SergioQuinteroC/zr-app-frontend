@@ -4,23 +4,24 @@ import { ZRAppContext } from "../../Context";
 const Card = ({ id, title, description, price, images, address }) => {
 	const context = useContext(ZRAppContext);
 
+	// const pesos = new Intl.NumberFormat('es-ES', {
+	// 	style: 'currency',
+	// 	currency: 'COP'
+	// })
+
 	const showEstate = () => {
 		context.openRealestateDetail();
 		context.setEstateToShow({ title, price, description, images, address });
 	};
 
 	return (
-		//    card wrapper
 		<div
-			className="overflow-hidden rounded-md bg-white shadow-2xl"
+			className="rounded-md bg-white shadow-2xl cursor-pointer"
 			onClick={() => showEstate()}
 		>
-			{/* image container  */}
-			<div
-				className={`h-64 w-full bg-[url('${images[1]}')] bg-cover bg-center`}
-			></div>
-
-			{/* content container */}
+			<figure className="relative w-full">
+				<img src={images[0]} alt={title} />
+			</figure>
 			<div className="flex flex-col gap-2 p-4">
 				<div>
 					<p className="text-xl font-bold text-gray-900">{title}</p>
@@ -28,12 +29,11 @@ const Card = ({ id, title, description, price, images, address }) => {
 					<p className="text-sm text-gray-500">{address}</p>
 				</div>
 			</div>
-
-			{/* footer container */}
 			<div className="flex justify-between border-t border-t-gray-100 bg-gray-50 p-3">
 				<div className="flex items-center">
-					<p className="text-xl font-bold text-gray-900">${price}</p>
-					{/* <p className="text-sm text-gray-500"></p> */}
+					<p className="text-xl font-bold text-gray-900">
+						${new Intl.NumberFormat().format(price)}
+					</p>
 				</div>
 			</div>
 		</div>
