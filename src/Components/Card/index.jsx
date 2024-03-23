@@ -9,7 +9,6 @@ const Card = ({ id, title, description, price, images, address }) => {
 		context.setEstateToShow({ title, price, description, images, address });
 	};
 
-	console.log(images[0]);
 	return (
 		//    card wrapper
 		<div
@@ -18,7 +17,7 @@ const Card = ({ id, title, description, price, images, address }) => {
 		>
 			{/* image container  */}
 			<div
-				className={`h-64 w-full bg-[url('${images[0]}')] bg-cover bg-center`}
+				className={`h-64 w-full bg-[url('${images[1]}')] bg-cover bg-center`}
 			></div>
 
 			{/* content container */}
