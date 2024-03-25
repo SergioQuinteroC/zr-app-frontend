@@ -9,11 +9,12 @@ import Login from "../Login";
 import NotFound from "../NotFound";
 
 import Navbar from "../../Components/Navbar";
+import Layout from "../../Components/Layout";
 
 const AppRoutes = () => {
 	const routes = useRoutes([
 		{ path: "/", element: <Home /> },
-		{ path: "/detail", element: <Detail /> },
+		{ path: "/detail/:id", element: <Detail /> },
 		{ path: "/dashboard", element: <Dashboard /> },
 		{ path: "/login", element: <Login /> },
 		{ path: "/*", element: <NotFound /> },
@@ -25,7 +26,9 @@ const App = () => {
 		<ZRAppProvider>
 			<BrowserRouter>
 				<Navbar />
-				<AppRoutes />
+				<Layout>
+					<AppRoutes />
+				</Layout>
 			</BrowserRouter>
 		</ZRAppProvider>
 	);

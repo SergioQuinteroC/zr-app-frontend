@@ -6,7 +6,6 @@ import Layout from "./../../Components/Layout";
 function Home() {
 	const [items, setItems] = useState();
 
-	console.log(items);
 	useEffect(() => {
 		fetch(`http://localhost:3000/api/v1/realestates`)
 			.then((response) => response.json())
