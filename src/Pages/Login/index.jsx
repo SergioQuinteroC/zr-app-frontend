@@ -1,4 +1,41 @@
+import { useRef, useState } from "react";
+import { Navigate } from "react-router-dom";
+import Cookies from "js-cookie";
+
 function Login() {
+	const [user, setUser] = useState(null);
+	const [error, setError] = useState(null);
+	const form = useRef(null);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const formData = new FormData(form.current);
+		const data = Object.fromEntries(formData);
+		try {
+			const response = await fetch(
+				"http://localhost:3000/api/v1/auth/login",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(data),
+				}
+			);
+			if (response.status === 401) {
+				setError("Usuario o contraseña incorrectos");
+			}
+			if (response.ok || response.status === 200) {
+				setError(null);
+				const { token } = await response.json();
+				Cookies.set("token", token, { expires: 10 });
+				setUser(true);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	return (
 		<div className="flex min-h-full w-full flex-col justify-center px-6 py-12 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -12,8 +49,16 @@ function Login() {
 				</h2>
 			</div>
 
+			{error && (
+				<p className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm text-center">
+					{error}
+				</p>
+			)}
+
+			{user && <Navigate to="/dashboard" replace={true} />}
+
 			<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-				<form className="space-y-6" action="#" method="POST">
+				<form className="space-y-6" ref={form}>
 					<div>
 						<label
 							htmlFor="email"
@@ -66,6 +111,7 @@ function Login() {
 						<button
 							type="submit"
 							className="flex w-full justify-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+							onClick={handleSubmit}
 						>
 							Entrar!
 						</button>
