@@ -1,9 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TableRow from "../../Components/TableRow";
-import { useState } from "react";
+import Modal from "../../Components/Modal";
+import Form from "../../Components/Forms";
 
 function Dashboard() {
 	const [items, setItems] = useState([]);
+	const [modalOpen, setModalOpen] = useState(false);
+	const [editingItem, setEditingItem] = useState(null);
+
+	const openModal = (item) => {
+		setEditingItem(item);
+		setModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setModalOpen(false);
+		setEditingItem(null);
+	};
+
+	const handleSubmit = (value) => {
+		console.log("Guardando", value);
+		closeModal();
+	};
 
 	useEffect(() => {
 		fetch(`http://localhost:3000/api/v1/realestates`)
@@ -40,7 +58,7 @@ function Dashboard() {
 						</form>
 					</div>
 					<button
-						id="createProductButton"
+						onClick={() => openModal(null)}
 						className="border border-gray-300 bg-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5"
 						type="button"
 					>
@@ -112,7 +130,13 @@ function Dashboard() {
 								</thead>
 								<tbody className="bg-white divide-y divide-gray-200">
 									{items.map((item) => (
-										<TableRow key={item.id} {...item} />
+										<TableRow
+											key={item.id}
+											{...item}
+											onClick={() =>
+												openModal(item.title)
+											}
+										/>
 									))}
 								</tbody>
 							</table>
@@ -120,6 +144,18 @@ function Dashboard() {
 					</div>
 				</div>
 			</div>
+			<Modal
+				isOpen={modalOpen}
+				onClose={closeModal}
+				onSubmit={handleSubmit}
+				title={editingItem ? "Editar" : "Nuevo"}
+			>
+				<Form
+					onSubmit={handleSubmit}
+					onCancel={closeModal}
+					defaultValue={editingItem}
+				/>
+			</Modal>
 		</div>
 	);
 }

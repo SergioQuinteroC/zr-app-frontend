@@ -1,4 +1,12 @@
-const TableRow = ({ id, title, description, price, status, address }) => {
+const TableRow = ({
+	id,
+	title,
+	description,
+	price,
+	status,
+	address,
+	onClick,
+}) => {
 	return (
 		<tr className="hover:bg-gray-100">
 			<td className="w-4 p-4">
@@ -23,11 +31,16 @@ const TableRow = ({ id, title, description, price, status, address }) => {
 			<td className="p-4 text-base overflow-hidden font-medium">
 				{address}
 			</td>
-			<td className="p-4 text-base font-medium">${new Intl.NumberFormat().format(price)}</td>
-			<td className="p-4 text-base font-medium">{status === 'active' ? 'Activa' : 'Inactiva'}</td>
+			<td className="p-4 text-base font-medium">
+				${new Intl.NumberFormat().format(price)}
+			</td>
+			<td className="p-4 text-base font-medium">
+				{status === "active" ? "Activa" : "Inactiva"}
+			</td>
 
 			<td className="p-4 space-x-2 whitespace-nowrap">
 				<button
+					onClick={onClick}
 					type="button"
 					className="inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-lg bg-green-300"
 				>
