@@ -1,9 +1,11 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { ZRAppContext } from "../../Context";
 
 function Login() {
-	const [user, setUser] = useState(null);
+	const { isLogged, setIsLogged } = useContext(ZRAppContext);
+
 	const [error, setError] = useState(null);
 	const form = useRef(null);
 
@@ -29,7 +31,7 @@ function Login() {
 				setError(null);
 				const { token } = await response.json();
 				Cookies.set("token", token, { expires: 10 });
-				setUser(true);
+				setIsLogged(true);
 			}
 		} catch (error) {
 			console.error(error);
@@ -55,7 +57,7 @@ function Login() {
 				</p>
 			)}
 
-			{user && <Navigate to="/dashboard" replace={true} />}
+			{isLogged && <Navigate to="/dashboard" replace={true} />}
 
 			<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 				<form className="space-y-6" ref={form}>
