@@ -1,6 +1,16 @@
-import TableRow from "../../Components/Row";
+import { useEffect } from "react";
+import TableRow from "../../Components/TableRow";
+import { useState } from "react";
 
 function Dashboard() {
+	const [items, setItems] = useState([]);
+
+	useEffect(() => {
+		fetch(`http://localhost:3000/api/v1/realestates`)
+			.then((response) => response.json())
+			.then((data) => setItems(data));
+	}, []);
+
 	return (
 		<div>
 			<div className="w-full mb-1">
@@ -101,10 +111,9 @@ function Dashboard() {
 									</tr>
 								</thead>
 								<tbody className="bg-white divide-y divide-gray-200">
-									<TableRow />
-									<TableRow />
-									<TableRow />
-									<TableRow />
+									{items.map((item) => (
+										<TableRow key={item.id} {...item} />
+									))}
 								</tbody>
 							</table>
 						</div>

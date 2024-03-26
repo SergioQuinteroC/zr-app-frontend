@@ -1,4 +1,4 @@
-const TableRow = () => {
+const TableRow = ({ id, title, description, price, status, address }) => {
 	return (
 		<tr className="hover:bg-gray-100">
 			<td className="w-4 p-4">
@@ -15,20 +15,16 @@ const TableRow = () => {
 				</div>
 			</td>
 			<td className="p-4 text-sm font-normal">
-				<div className="text-base font-semibold">
-					Education Dashboard
-				</div>
+				<div className="text-base font-semibold">{title}</div>
 			</td>
 			<td className="max-w-sm p-4 overflow-hidden text-base font-normal truncate xl:max-w-xs ">
-				Start developing with an open-source library of over 450+ UI
-				components, sections, and pages built with the utility classes
-				from Tailwind CSS and designed in Figma.
+				{description}
 			</td>
 			<td className="p-4 text-base overflow-hidden font-medium">
-				Doña maria 123
+				{address}
 			</td>
-			<td className="p-4 text-base font-medium">$13500000</td>
-			<td className="p-4 text-base font-medium">Activo</td>
+			<td className="p-4 text-base font-medium">${new Intl.NumberFormat().format(price)}</td>
+			<td className="p-4 text-base font-medium">{status === 'active' ? 'Activa' : 'Inactiva'}</td>
 
 			<td className="p-4 space-x-2 whitespace-nowrap">
 				<button
