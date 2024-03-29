@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TableRow from "../../Components/TableRow";
 import Modal from "../../Components/Modal";
-import Form from "../../Components/Forms";
+import FormEstate from "../../Components/Forms/FormEstate";
 
 function Dashboard() {
 	const [items, setItems] = useState([]);
@@ -16,11 +16,6 @@ function Dashboard() {
 	const closeModal = () => {
 		setModalOpen(false);
 		setEditingItem(null);
-	};
-
-	const handleSubmit = (value) => {
-		console.log("Guardando", value);
-		closeModal();
 	};
 
 	useEffect(() => {
@@ -133,9 +128,7 @@ function Dashboard() {
 										<TableRow
 											key={item.id}
 											{...item}
-											onClick={() =>
-												openModal(item.title)
-											}
+											onClick={() => openModal(item)}
 										/>
 									))}
 								</tbody>
@@ -147,12 +140,10 @@ function Dashboard() {
 			<Modal
 				isOpen={modalOpen}
 				onClose={closeModal}
-				onSubmit={handleSubmit}
 				title={editingItem ? "Editar" : "Nuevo"}
 			>
-				<Form
-					onSubmit={handleSubmit}
-					onCancel={closeModal}
+				<FormEstate
+					closeModal={closeModal}
 					defaultValue={editingItem}
 				/>
 			</Modal>
