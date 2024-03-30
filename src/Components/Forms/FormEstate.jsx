@@ -2,9 +2,10 @@ import { useRef, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { supabase } from "../../supabaseClient";
+import Cookies from "js-cookie";
 
 const FormEstate = ({ closeModal, defaultValue }) => {
-	const onDrop = (files) => {
+	const onDrop = useCallback((files) => {
 		for (const img of files) {
 			const file = new FileReader();
 
@@ -14,11 +15,14 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 
 			file.readAsDataURL(img);
 		}
-	};
+	}, []);
 
 	const [error, setError] = useState(null);
 	const [previews, setPreviews] = useState([]);
 	const form = useRef(null);
+	const [isUploading, setIsUploading] = useState(false);
+	const [isUploaded, setIsUploaded] = useState(false);
+	const [imagesUrl, setImagesUrl] = useState([]);
 	const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
 		useDropzone({
 			accept: {
@@ -26,22 +30,51 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 			},
 			onDrop,
 		});
-	const [isUploading, setIsUploading] = useState(false);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
+
 		const formData = new FormData(form.current);
 		const data = Object.fromEntries(formData);
-		delete data.images;
-		console.log(data);
-		// closeModal();
+
+		data.images = [...imagesUrl, ...(defaultValue?.images ?? [])];
+		if (defaultValue) {
+			const response = await handleRequest(
+				`${import.meta.env.VITE_API_URL}/realestates/${
+					defaultValue.id
+				}`,
+				"PATCH",
+				data
+			);
+			if (response.ok) {
+				setError(null);
+				window.location.reload();
+				closeModal();
+			}
+		} else {
+			const response = await handleRequest(
+				`${import.meta.env.VITE_API_URL}/realestates`,
+				"POST",
+				data
+			);
+			if (response.ok) {
+				setError(null);
+				window.location.reload();
+				closeModal();
+			}
+		}
 	};
 
 	const handleSubmitImages = async (event) => {
 		event.preventDefault();
 
-		if (!acceptedFiles) {
-			setError("Debes seleccionar al menos una imagen");
+		if (
+			!acceptedFiles ||
+			acceptedFiles.length === 0 ||
+			previews.length === 0 ||
+			!previews
+		) {
+			setError("Debes subir al menos una imagen");
 			return;
 		}
 
@@ -54,21 +87,57 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 				if (error) {
 					throw error;
 				}
-				// data.fullPath https://ouzpoiuobxlglxqqcuoq.supabase.co/storage/v1/object/public/
+				setImagesUrl((prevImagesUrl) => [
+					...prevImagesUrl,
+					`${
+						import.meta.env.VITE_SUPABASE_URL
+					}/storage/v1/object/public/images_realestate/${encodeURIComponent(
+						data.path
+					)}`,
+				]);
 			}
 			setIsUploading(false);
+			setIsUploaded(true);
 		} catch (error) {
-			console.error(error);
-			setError("Ocurrió un error al subir las imágenes");
+			setError("Ocurrió un error al subir las imágenes, sube de nuevo");
 		}
 
 		setError(null);
 	};
 
+	const onRemoveFileToUpload = (file) => () => {
+		acceptedFiles.splice(acceptedFiles.indexOf(file), 1);
+		setPreviews((prevPreviews) =>
+			prevPreviews.filter((preview) => preview !== file)
+		);
+	};
+
+	const handleRequest = async (url, method, data) => {
+		try {
+			const response = await fetch(url, {
+				method,
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${Cookies.get("token")}`,
+				},
+				body: JSON.stringify(data),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to fetch data");
+			}
+
+			return response;
+		} catch (error) {
+			console.error(error);
+			throw new Error("An error occurred while processing the request");
+		}
+	};
+
 	return (
 		<>
 			{error && (
-				<p className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm text-center">
+				<p className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm text-center text-red">
 					{error}
 				</p>
 			)}
@@ -166,6 +235,11 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 					{isUploading && (
 						<p className="mt-2 text-center">Subiendo imágenes...</p>
 					)}
+					{isUploaded && (
+						<p className="mt-2 text-center text-green-500">
+							Imágenes subidas correctamente
+						</p>
+					)}
 				</div>
 				<div className="mt-2">
 					{previews.length > 0 && (
@@ -175,20 +249,45 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 									key={index}
 									className="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/4 h-28"
 								>
-									<img
-										className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
-										src={preview}
-										onLoad={() => {
-											URL.revokeObjectURL(preview);
-										}}
-									/>
+									<article className="group hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm">
+										<img
+											className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
+											src={preview}
+											onLoad={() => {
+												URL.revokeObjectURL(preview);
+											}}
+										/>
+
+										<section className="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+											<button
+												onClick={onRemoveFileToUpload(
+													preview
+												)}
+												className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
+												data-target="blob:https://tailwindcomponents.com/381b4102-7811-4ee3-92d7-8ca4c323421b"
+											>
+												<svg
+													className="pointer-events-none fill-current w-4 h-4 ml-auto"
+													xmlns="http://www.w3.org/2000/svg"
+													width="24"
+													height="24"
+													viewBox="0 0 24 24"
+												>
+													<path
+														className="pointer-events-none"
+														d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"
+													></path>
+												</svg>
+											</button>
+										</section>
+									</article>
 								</li>
 							))}
 						</ul>
 					)}
 				</div>
 
-				{defaultValue?.images && (
+				{defaultValue?.images.length > 0 && (
 					<div className="mt-2">
 						<p className="font-medium text-gray-700">
 							Imágenes subidas
