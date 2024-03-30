@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const TableRow = ({
 	id,
 	title,
@@ -7,6 +9,30 @@ const TableRow = ({
 	address,
 	onClick,
 }) => {
+	const onDelete = async () => {
+		let confirmDelete = window.confirm(
+			"¿Estás seguro de eliminar este registro?"
+		);
+		if (confirmDelete) {
+			try {
+				const response = await fetch(
+					`${import.meta.env.VITE_API_URL}/realestates/${id}`,
+					{
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${Cookies.get("token")}`,
+						},
+					}
+				);
+				if (response.ok || response.status === 200) {
+					window.location.reload();
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		}
+	};
 	return (
 		<tr className="hover:bg-gray-100">
 			<td className="w-4 p-4">
@@ -60,12 +86,8 @@ const TableRow = ({
 					Actualizar
 				</button>
 				<button
+					onClick={onDelete}
 					type="button"
-					id="deleteProductButton"
-					data-drawer-target="drawer-delete-product-default"
-					data-drawer-show="drawer-delete-product-default"
-					aria-controls="drawer-delete-product-default"
-					data-drawer-placement="right"
 					className="inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-red-700 rounded-lg text-white"
 				>
 					<svg

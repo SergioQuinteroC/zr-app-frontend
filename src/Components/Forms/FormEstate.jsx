@@ -113,23 +113,22 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 	};
 
 	const onRemoveFileUploaded = (file) => async () => {
-		event.preventDefault();
 		setImagesUrl((prevImagesUrl) =>
 			prevImagesUrl.filter((img) => img !== file)
 		);
 
 		defaultValue.images = defaultValue.images.filter((img) => img !== file);
 
-		// const paths = file.split("/");
-		// const fileName = paths[paths.length - 1];
+		const paths = file.split("/");
+		const fileName = paths[paths.length - 1];
 
-		// const { error } = await supabase.storage
-		// 	.from("images_realestate")
-		// 	.remove(decodeURIComponent(fileName));
+		const { error } = await supabase.storage
+			.from("images_realestate")
+			.remove(decodeURIComponent(fileName));
 
-		// if (error) {
-		// 	setError("Ocurrió un error al eliminar la imagen");
-		// }
+		if (error) {
+			setError("Ocurrió un error al eliminar la imagen");
+		}
 	};
 
 	const handleRequest = async (url, method, data) => {
