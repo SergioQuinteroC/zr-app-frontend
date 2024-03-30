@@ -7,7 +7,7 @@ function Home() {
 	const [items, setItems] = useState();
 
 	useEffect(() => {
-		fetch(`http://localhost:3000/api/v1/realestates`)
+		fetch(`${import.meta.env.VITE_API_URL}/realestates`)
 			.then((response) => response.json())
 			.then((data) => setItems(data));
 	}, []);
