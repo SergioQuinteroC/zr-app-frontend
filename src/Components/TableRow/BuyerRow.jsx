@@ -1,15 +1,7 @@
 import Cookies from "js-cookie";
 import { NavLink } from "react-router-dom";
 
-const TableRow = ({
-	id,
-	title,
-	description,
-	price,
-	status,
-	address,
-	onClick,
-}) => {
+const BuyerRow = ({ id, name, lastName, phone, onClick }) => {
 	const onDelete = async () => {
 		let confirmDelete = window.confirm(
 			"¿Estás seguro de eliminar este registro?"
@@ -17,7 +9,7 @@ const TableRow = ({
 		if (confirmDelete) {
 			try {
 				const response = await fetch(
-					`${import.meta.env.VITE_API_URL}/realestates/${id}`,
+					`${import.meta.env.VITE_API_URL}/buyers/${id}`,
 					{
 						method: "DELETE",
 						headers: {
@@ -38,21 +30,14 @@ const TableRow = ({
 		<tr className="hover:bg-gray-100">
 			<td className="p-4 text-sm font-normal">
 				<NavLink to={`/detail/${id}`}>
-					<p className="text-base font-semibold">{title}</p>
+					<p className="text-base font-semibold">{name}</p>
 				</NavLink>
 			</td>
-			<td className="max-w-sm p-4 overflow-hidden text-base font-normal truncate xl:max-w-xs ">
-				{description}
-			</td>
+
 			<td className="p-4 text-base overflow-hidden font-medium">
-				{address}
+				{lastName}
 			</td>
-			<td className="p-4 text-base font-medium">
-				${new Intl.NumberFormat().format(price)}
-			</td>
-			<td className="p-4 text-base font-medium">
-				{status === "active" ? "Activa" : "Inactiva"}
-			</td>
+			<td className="p-4 text-base font-medium">{phone}</td>
 
 			<td className="p-4 space-x-2 whitespace-nowrap">
 				<button
@@ -99,4 +84,4 @@ const TableRow = ({
 	);
 };
 
-export default TableRow;
+export default BuyerRow;

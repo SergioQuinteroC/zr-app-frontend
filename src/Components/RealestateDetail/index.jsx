@@ -10,9 +10,9 @@ const RealestateDetail = () => {
 		useContext(ZRAppContext);
 
 	const message = `Hola, estoy interesado en tu propiedad ${estateToShow.title}`;
-	const URI = `https://wa.me/573122387436?text=${encodeURIComponent(
-		message
-	)}`;
+	const URI = `https://wa.me/${
+		import.meta.env.VITE_NUMBER_CEL
+	}?text=${encodeURIComponent(message)}`;
 
 	return (
 		<aside
@@ -22,7 +22,10 @@ const RealestateDetail = () => {
 		>
 			<div className="flex justify-between items-center p-6">
 				<h1 className="font-medium text-2xl">Detalles</h1>
-				<div onClick={() => closeRealestateDetail()}>
+				<div
+					className="cursor-pointer"
+					onClick={() => closeRealestateDetail()}
+				>
 					<XMarkIcon className="h-6 w-6 text-black"></XMarkIcon>
 				</div>
 			</div>
