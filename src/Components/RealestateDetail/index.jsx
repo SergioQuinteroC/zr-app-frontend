@@ -36,9 +36,14 @@ const RealestateDetail = () => {
 				<span className="font-medium text-2xl mb-2">
 					${new Intl.NumberFormat().format(estateToShow.price)}
 				</span>
-				<span className="font-medium text-2xl">
-					{estateToShow.title}
-				</span>
+				<div className="flex justify-between">
+					<span className="font-medium text-2xl">
+						{estateToShow.title}
+					</span>
+					<span className="text-md mr-10">
+						{estateToShow.category}
+					</span>
+				</div>
 				<span className="font-light text-sm">
 					{estateToShow.description}
 				</span>

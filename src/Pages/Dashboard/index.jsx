@@ -97,7 +97,13 @@ function Dashboard() {
 											scope="col"
 											className="p-4 text-xs font-medium text-left text-gray-500 uppercase"
 										>
-											Status
+											Categoría
+										</th>
+										<th
+											scope="col"
+											className="p-4 text-xs font-medium text-left text-gray-500 uppercase"
+										>
+											Estatus
 										</th>
 										<th
 											scope="col"

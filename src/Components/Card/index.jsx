@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ZRAppContext } from "../../Context";
 
-const Card = ({ id, title, description, price, images, address }) => {
+const Card = ({ id, title, description, price, images, address, category }) => {
 	const context = useContext(ZRAppContext);
 
 	// const pesos = new Intl.NumberFormat('es-ES', {
@@ -11,7 +11,14 @@ const Card = ({ id, title, description, price, images, address }) => {
 
 	const showEstate = () => {
 		context.openRealestateDetail();
-		context.setEstateToShow({ title, price, description, images, address });
+		context.setEstateToShow({
+			title,
+			price,
+			description,
+			images,
+			address,
+			category,
+		});
 	};
 
 	return (
@@ -24,7 +31,12 @@ const Card = ({ id, title, description, price, images, address }) => {
 			</figure>
 			<div className="flex flex-col gap-2 p-4">
 				<div>
-					<p className="text-xl font-bold text-gray-900">{title}</p>
+					<div className="flex justify-between">
+						<p className="text-xl font-bold text-gray-900">
+							{title}
+						</p>
+						<p className="text-sm">{category}</p>
+					</div>
 					<p className="text-sm text-gray-700">{description}</p>
 					<p className="text-sm text-gray-500">{address}</p>
 				</div>

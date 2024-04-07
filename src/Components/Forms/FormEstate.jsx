@@ -196,6 +196,27 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 				</div>
 				<div>
 					<label
+						htmlFor="category"
+						className="font-medium text-gray-700"
+					>
+						Categoría:
+					</label>
+					<select
+						id="category"
+						name="category"
+						defaultValue={defaultValue?.category ?? ""}
+						className="mt-1 p-1 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm"
+						required
+					>
+						<option value="Casa/Apartamento">
+							Casa/Apartamento
+						</option>
+						<option value="Casa/Lote">Casa/Lote</option>
+						<option value="Lote">Lote</option>
+					</select>
+				</div>
+				<div>
+					<label
 						htmlFor="description"
 						className="font-medium text-gray-700"
 					>

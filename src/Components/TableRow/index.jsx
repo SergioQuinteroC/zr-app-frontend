@@ -8,6 +8,7 @@ const TableRow = ({
 	price,
 	status,
 	address,
+	category,
 	onClick,
 }) => {
 	const onDelete = async () => {
@@ -49,6 +50,9 @@ const TableRow = ({
 			</td>
 			<td className="p-4 text-base font-medium">
 				${new Intl.NumberFormat().format(price)}
+			</td>
+			<td className="p-4 text-base font-medium">
+				{category}
 			</td>
 			<td className="p-4 text-base font-medium">
 				{status === "active" ? "Activa" : "Inactiva"}

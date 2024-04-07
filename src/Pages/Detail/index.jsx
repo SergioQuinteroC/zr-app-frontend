@@ -48,9 +48,14 @@ function Detail() {
 						<h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
 							{estate?.title}
 						</h2>
-						<p className="text-gray-500 text-sm">
-							{estate?.address}
-						</p>
+						<div className="flex justify-between">
+							<p className="text-gray-500 text-sm">
+								{estate?.address}
+							</p>
+							<p className="text-gray-500 text-sm">
+								{estate?.category}
+							</p>
+						</div>
 
 						<div className="flex items-center space-x-4 my-4">
 							<div>
