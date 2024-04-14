@@ -32,7 +32,7 @@ const RealestateDetail = () => {
 			<div className="flex w-[90%] h-[60%] mx-auto">
 				<Carousel slides={estateToShow.images}></Carousel>
 			</div>
-			<p className="flex flex-col p-4">
+			<div className="flex flex-col p-4">
 				<span className="font-medium text-2xl mb-2">
 					${new Intl.NumberFormat().format(estateToShow.price)}
 				</span>
@@ -50,7 +50,7 @@ const RealestateDetail = () => {
 				<span className="font-light text-sm">
 					{estateToShow.address}
 				</span>
-			</p>
+			</div>
 			<div className="sharing-buttons flex flex-wrap justify-center">
 				<a
 					className="border-2 duration-200 ease inline-flex items-center mb-1 mr-1 transition py-5 pl-5 pr-7 text-lg rounded-lg text-white border-green-600 bg-green-600 hover:bg-green-700 hover:border-green-700"
