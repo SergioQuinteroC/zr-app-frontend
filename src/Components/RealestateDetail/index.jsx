@@ -3,7 +3,6 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 
 import { ZRAppContext } from "../../Context";
 import Carousel from "../Carousel";
-import "./styles.css";
 
 const RealestateDetail = () => {
 	const { isDetailOpen, closeRealestateDetail, estateToShow } =
@@ -17,11 +16,11 @@ const RealestateDetail = () => {
 	return (
 		<aside
 			className={`${
-				isDetailOpen ? "flex" : "hidden"
-			} product-detail flex flex-col fixed right-0 border border-black rounded-lg bg-white`}
+				isDetailOpen ? "flex overflow-auto" : "hidden"
+			} 2xl:w-[700px] xl:w-[650px] md:w-[600px] w-full h-[80vh] top-16 flex flex-col fixed right-0 border border-black rounded-lg bg-white`}
 		>
 			<div className="flex justify-between items-center p-6">
-				<h1 className="font-medium text-2xl">Detalles</h1>
+				<h1 className="font-medium xl:text-2xl">Detalles</h1>
 				<div
 					className="cursor-pointer"
 					onClick={() => closeRealestateDetail()}
@@ -29,7 +28,7 @@ const RealestateDetail = () => {
 					<XMarkIcon className="h-6 w-6 text-black"></XMarkIcon>
 				</div>
 			</div>
-			<div className="flex w-[90%] h-[60%] mx-auto">
+			<div className="flex w-[90%] mx-auto md:h-[60%] xl:h-[60%] 2xl:h-[60%] sm:h-auto ">
 				<Carousel slides={estateToShow.images}></Carousel>
 			</div>
 			<div className="flex flex-col p-4">

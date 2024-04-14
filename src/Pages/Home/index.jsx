@@ -77,18 +77,18 @@ function Home() {
 
 	return (
 		<>
-			<div className="flex-row flex">
-				<div className="top-0 sticky start w-full max-w-72 max-h-screen">
-					<aside className="">
+			<div className="flex-col flex md:flex-row md:justify-center">
+				<div className="start w-full max-w-72 max-h-screen px-4">
+					<aside className="top-0 sticky">
 						<div>
-							<h2>Filtrar por precio:</h2>
+							<h2 className="text-lg font-bold">Filtrar por precio:</h2>
 							<div className=" my-4">
 								<div className="w-full max-w-lg">
-									<div className="flex items-center justify-between">
+									<div className="flex flex-col md:flex-row items-center justify-between">
 										<input
 											type="number"
 											placeholder="Desde"
-											className="border border-gray-400 rounded py-2 px-3 w-1/2 mr-2"
+											className="border border-gray-400 rounded py-2 px-3 w-full md:w-1/2 mb-2 md:mb-0"
 											value={minPrice}
 											onChange={(e) =>
 												setMinPrice(e.target.value)
@@ -97,7 +97,7 @@ function Home() {
 										<input
 											type="number"
 											placeholder="Hasta"
-											className="border border-gray-400 rounded py-2 px-3 w-1/2 ml-2"
+											className="border border-gray-400 rounded py-2 px-3 w-full md:w-1/2 mb-2 md:mb-0"
 											value={maxPrice}
 											onChange={(e) =>
 												setMaxPrice(e.target.value)
@@ -117,7 +117,7 @@ function Home() {
 						</div>
 
 						<div className="text-lg">
-							<h2>Filtrar por categoría:</h2>
+							<h2 className="text-lg font-bold">Filtrar por categoría:</h2>
 							<div>
 								<input
 									type="checkbox"
