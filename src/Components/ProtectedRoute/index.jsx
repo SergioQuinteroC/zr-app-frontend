@@ -13,7 +13,7 @@ const ProtectedRoute = ({ component: Component }) => {
 			if (token) {
 				try {
 					const response = await fetch(
-						"http://localhost:3000/api/v1/auth/verify-token",
+						`${import.meta.env.VITE_API_URL}/auth/verify-token`,
 						{
 							method: "POST",
 							headers: {
