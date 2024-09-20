@@ -1,17 +1,38 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { ZRAppContext } from "../../Context";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
+	const navigate = useNavigate();
+
+	const { isLogged, setIsLogged } = useContext(ZRAppContext);
+
+	const handleLogout = () => {
+		setIsLogged(false);
+		Cookies.remove("token");
+		window.location.reload();
+	};
+
 	const defaultStyle =
 		"block py-2 px-3 text-white rounded md:bg-transparent md:p-0 md:dark:bg-transparent";
 	const activeStyle =
-		"block py-2 px-3 text-blue-700 rounded md:bg-transparent md:p-0 md:dark:bg-transparent";
+		"block py-2 px-3 text-dark-600 rounded md:bg-transparent md:p-0 md:dark:bg-transparent";
+
+	const handleLoginClick = () => {
+		if (isLogged) {
+			// Si el usuario ya está logueado, redirigir al dashboard
+			console.log("Dashboard");
+			navigate("/dashboard");
+		} else {
+			// Si no está logueado, permitir ir al login
+			navigate("/login");
+		}
+	};
 	return (
-		<nav className="bg-white border-gray-200 dark:bg-blue-300">
-			<div className="max-w-screen-xl flex flex-wrap gap-3 items-center justify-between mx-auto p-4">
-				<NavLink
-					to="/"
-					className="flex space-x-3 rtl:space-x-reverse"
-				>
+		<nav className="bg-custom1 border-gray-200 dark:bg-customGray-light">
+			<div className="max-w-screen-xl flex flex-wrap gap-3 items-center justify-between mx-auto lg:p-4 sm:p-2">
+				<NavLink to="/" className="flex space-x-3 rtl:space-x-reverse">
 					<img
 						src="/realestate.svg"
 						className="h-8"
@@ -21,7 +42,7 @@ const Navbar = () => {
 						ZR App
 					</span>
 				</NavLink>
-				<ul className="flex items-center gap-3 font-medium p-4 md:p-0 mt-4 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:bg-white dark:bg-blue-300 md:dark:bg-blue-300 dark:blue-300">
+				<ul className="flex items-center gap-3 font-medium p-4 md:p-0 mt-4 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:bg-white dark:bg-customGray-light md:dark:bg-customGray-light dark:customGray-light">
 					<li>
 						<NavLink
 							to="/"
@@ -33,14 +54,23 @@ const Navbar = () => {
 						</NavLink>
 					</li>
 					<li>
-						<NavLink
-							to="/login"
-							className={({ isActive }) =>
-								isActive ? activeStyle : defaultStyle
-							}
-						>
-							Login
-						</NavLink>
+						{isLogged ? (
+							<button
+								onClick={handleLogout}
+								className="block py-2 px-3 text-white rounded md:bg-transparent md:p-0 md:dark:bg-transparent"
+							>
+								Salir
+							</button>
+						) : (
+							<button
+								onClick={handleLoginClick}
+								className={({ isActive }) =>
+									isActive ? activeStyle : defaultStyle
+								}
+							>
+								Login
+							</button>
+						)}
 					</li>
 				</ul>
 			</div>

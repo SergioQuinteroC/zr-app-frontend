@@ -29,7 +29,7 @@ const ListBuyers = ({ buyers, idRealEstate }) => {
 				<div className="items-center justify-between block sm:flex md:divide-x md:divide-gray-100">
 					<button
 						onClick={() => openModal(null)}
-						className="border border-gray-300 bg-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5"
+						className="border border-gray-300 bg-customGray-light text-white font-medium rounded-lg text-sm px-5 py-2.5"
 						type="button"
 					>
 						Añadir nuevo

@@ -246,6 +246,26 @@ const FormEstate = ({ closeModal, defaultValue }) => {
 						required
 					/>
 				</div>
+				{defaultValue?.status && (
+					<div>
+						<label
+							htmlFor="status"
+							className="font-medium text-gray-700"
+						>
+							Status:
+						</label>
+						<select
+							id="status"
+							name="status"
+							defaultValue={defaultValue?.status ?? ""}
+							className="mt-1 p-1 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm"
+							required
+						>
+							<option value="active">Active</option>
+							<option value="inactive">Inactive</option>
+						</select>
+					</div>
+				)}
 
 				<div className="mt-1">
 					<p className="font-medium text-gray-700">Imágenes:</p>

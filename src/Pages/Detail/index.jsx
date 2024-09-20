@@ -38,44 +38,48 @@ function Detail() {
 	}
 
 	return (
-		<div className="py-6">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-				<div className="flex flex-col md:flex-row -mx-4">
-					<div className="md:flex-1 px-4">
-						<Carousel slides={estate?.images} />
-					</div>
-					<div className="md:flex-1 px-4">
-						<h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-							{estate?.title}
-						</h2>
-						<div className="flex justify-between">
-							<p className="text-gray-500 text-sm">
-								{estate?.address}
-							</p>
-							<p className="text-gray-500 text-sm">
-								{estate?.category}
-							</p>
+		<div className="flex flex-col items-center mt-5 ml-10 mr-10">
+			<div className="py-6">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+					<div className="flex flex-col md:flex-row -mx-4">
+						<div className="md:flex-1 px-4">
+							<Carousel slides={estate?.images} />
 						</div>
+						<div className="md:flex-1 px-4">
+							<h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
+								{estate?.title}
+							</h2>
+							<div className="flex justify-between">
+								<p className="text-gray-500 text-sm">
+									{estate?.address}
+								</p>
+								<p className="text-gray-500 text-sm">
+									{estate?.category}
+								</p>
+							</div>
 
-						<div className="flex items-center space-x-4 my-4">
-							<div>
-								<div className="rounded-lg bg-gray-100 flex py-2 px-3">
-									<span className="mr-1 mt-1">$</span>
-									<span className="font-bold text-3xl">
-										{new Intl.NumberFormat().format(
-											estate?.price
-										)}
-									</span>
+							<div className="flex items-center space-x-4 my-4">
+								<div>
+									<div className="rounded-lg bg-gray-100 flex py-2 px-3">
+										<span className="mr-1 mt-1">$</span>
+										<span className="font-bold text-3xl">
+											{new Intl.NumberFormat().format(
+												estate?.price
+											)}
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<p className="text-gray-500">{estate?.description}</p>
+							<p className="text-gray-500">
+								{estate?.description}
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div className="py-6">
-				<ListBuyers buyers={estate?.buyers} idRealEstate={id} />
+				<div className="py-6">
+					<ListBuyers buyers={estate?.buyers} idRealEstate={id} />
+				</div>
 			</div>
 		</div>
 	);
